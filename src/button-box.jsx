@@ -6,6 +6,7 @@ export default function ButtonBox(props) {
     const hrefString = `https://twitter.com/intent/tweet?text=${props.text} - ${props.author}`
 
     const {getNewQuote} = props
+
     return (
         <div className="btn-box">
             <button className="new-quote-btn" onClick={getNewQuote}>Get New Quote</button>

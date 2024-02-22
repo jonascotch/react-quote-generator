@@ -10,32 +10,43 @@ export default function Body() {
     let [author, setAuthor] = useState({})
 
     async function getNewQuote() {
+
+        setAuthor({})
+
         let quoteURL = "https://api.quotable.io/random"
 
         if (theme != "") {
             quoteURL += `?tags=${theme}`
             setTheme("")
         }
+        
+        try {
+            const quoteResponse = await fetch(quoteURL)
 
-        const quoteResponse = await fetch(quoteURL)
+            const quoteData = await quoteResponse.json()
+    
+            if (quoteData.statusCode == 404) {
+                setQuote({
+                    content:"Sorry! No quote was found about your theme. Try another one!",
+                    author:""
+                })
+            } else {
+                setQuote(quoteData)                
+            }
+            
+    
+            let authorURL = `https://api.quotable.io/authors?slug=${quoteData.authorSlug}`
+    
+            let authorResponse = await fetch(authorURL)
+    
+            let authorData = await authorResponse.json()
+    
+            setAuthor(authorData.results[0])
 
-        const quoteData = await quoteResponse.json()
-
-        if (quoteData.statusCode == 404) {
-            setQuote({
-                content:"Sorry! No quote was found about your theme. Try another one!"
-            })
-        } else {
-            setQuote(quoteData)
+        } catch (error) {
+            console.log(error.message)
         }
 
-        let authorURL = `https://api.quotable.io/authors?slug=${quoteData.authorSlug}`
-
-        let authorResponse = await fetch(authorURL)
-
-        let authorData = await authorResponse.json()
-
-        setAuthor(authorData.results[0])
     }
 
     function updateTheme(text) {

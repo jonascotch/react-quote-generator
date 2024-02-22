@@ -11,7 +11,7 @@ html, body {
 
 body {
   background-image: url(/public/opacity-changed-body-bg-small.jpg);
-  background-size:stretch;
+  background-size: cover;
 }
 
 * {
@@ -278,18 +278,14 @@ footer p {
   }
 
   .quote-text p {
-    font-size: 1.5em;
     padding: 30px 0px;
+    font-size: 1.5em;
   }
 
   .quote-content {
     width: 100%;
     padding: 0;
     margin: 0;
-  }
-  
-  .quote-text p {
-    font-size: 2em;
   }
 
   .command-box{

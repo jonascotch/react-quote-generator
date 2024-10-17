@@ -13,7 +13,7 @@ export default function Body() {
 
         setAuthor({})
 
-        let quoteURL = "https://api.quotable.io/random"
+        let quoteURL = "http://api.quotable.io/quotes/random"
 
         if (theme != "") {
             quoteURL += `?tags=${theme}`
@@ -31,11 +31,11 @@ export default function Body() {
                     author:""
                 })
             } else {
-                setQuote(quoteData)                
+                setQuote(quoteData[0])      
             }
             
     
-            let authorURL = `https://api.quotable.io/authors?slug=${quoteData.authorSlug}`
+            let authorURL = `http://api.quotable.io/authors?slug=${quoteData[0].authorSlug}`
     
             let authorResponse = await fetch(authorURL)
     
@@ -43,7 +43,7 @@ export default function Body() {
     
             setAuthor(authorData.results[0])
 
-        } catch (error) {
+        } catch(error) {
             console.log(error.message)
         }
 
@@ -56,7 +56,7 @@ export default function Body() {
     return (
         <div className='wrapper'>
             <div className='title-bar'>
-                <a href="/"><h1>Quote Generator</h1></a>
+                <a href="./"><h1>Quote Generator</h1></a>
             </div>
             <div className='quote-box'>
                 <QuoteContent quote={quote} author={author}/>
@@ -66,7 +66,7 @@ export default function Body() {
                 </div>
             </div>            
             <footer>
-                <p>Made by jonascotch &copy; 2023</p>
+                <p>Made by <a href="https://jonascotch.github.io" >jonascotch</a> &copy; 2023</p>
                 <p>With many thanks to <a href="https://github.com/lukePeavey/quotable">lukePeavey</a></p>
             </footer>
         </div>
